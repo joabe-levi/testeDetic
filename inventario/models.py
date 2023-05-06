@@ -1,12 +1,13 @@
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
+import re
 
 from utils.basics.models import BasicModel
 from . import choices
 
 
-class Pessoa(AbstractUser):
+class Pessoa(User):
     cpf = models.CharField(max_length=18, null=True, blank=True, unique=True)
     telefone = models.CharField(max_length=30, null=True, blank=True, unique=True)
     eh_policial = models.BooleanField(default=False)
@@ -15,6 +16,31 @@ class Pessoa(AbstractUser):
         verbose_name = 'Pessoa'
         verbose_name_plural = 'Pessoas'
         db_table = 'pessoa'
+
+    @staticmethod
+    def valida_cpf(cpf):
+        cpf = re.sub('[^0-9]', '', cpf)
+        if len(cpf) != 11:
+            return False
+
+        if cpf == cpf[0] * 11:
+            return False
+
+        soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
+        resto = 11 - soma % 11
+        if resto > 9:
+            digito1 = '0'
+        else:
+            digito1 = str(resto)
+
+        soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
+        resto = 11 - soma % 11
+        if resto > 9:
+            digito2 = '0'
+        else:
+            digito2 = str(resto)
+
+        return cpf[-2:] == digito1 + digito2
 
 
 class Objeto(BasicModel):
