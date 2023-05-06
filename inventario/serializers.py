@@ -6,6 +6,7 @@ class PessoaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pessoa
         fields = '__all__'
+        read_only_fields = ('username', 'password')
 
 
 class ObjetoSerializer(serializers.ModelSerializer):
