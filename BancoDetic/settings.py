@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'simple_history',
     'rest_framework',
+    'django_filters',
+    'inventario',
 ]
 
 MIDDLEWARE = [
