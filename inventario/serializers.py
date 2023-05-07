@@ -19,10 +19,19 @@ class ObjetoSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class PossePessoaObjetoSerializer(serializers.ModelSerializer):
+class PossePessoaObjetoToListSerializer(serializers.ModelSerializer):
+    pessoa = PessoaSerializer()
+    objeto = ObjetoSerializer()
+
     class Meta:
         model = PossePessoaObjeto
-        fields = ('objeto', 'pessoa', 'eh_de_policia',)
+        fields = ('objeto', 'pessoa',)
+
+
+class PossePessoaObjetoToActionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PossePessoaObjeto
+        fields = ('objeto', 'pessoa',)
 
     def validate(self, data):
         objeto = data.get('objeto')
@@ -51,6 +60,6 @@ class PossePessoaObjetoSerializer(serializers.ModelSerializer):
 
             if outras_posses.count() >= 1:
                 raise serializers.ValidationError(
-                    'Objetos dos demais tipos só podem ser possuídos por uma pessoa por vez!'
+                    'Objetos desse tipo só podem ser possuídos por uma pessoa por vez!'
                 )
         return data
