@@ -1,16 +1,17 @@
 from django.views.generic.base import View
 from django.shortcuts import redirect
-from rest_framework import viewsets, mixins, generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import action
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 
+from utils.basics.permissions import IsPolicialOrReadOnly
 from . import filters as filter_inventario
 from .models import Pessoa, Objeto, PossePessoaObjeto
-from .serializers import PessoaSerializer, ObjetoSerializer, PossePessoaObjetoSerializer
+from .serializers import PessoaSerializer, ObjetoSerializer, PossePessoaObjetoToListSerializer, PossePessoaObjetoToActionSerializer
 
 
 class IndexView(View):
@@ -55,22 +56,24 @@ class PessoaListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = filter_inventario.PessoaFilter
     serializer_class = PessoaSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
 
 class PessoaCreateView(generics.CreateAPIView):
     serializer_class = PessoaSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
     def perform_create(self, serializer):
         cpf = serializer.validated_data.get('cpf')
         if Pessoa.valida_cpf(cpf):
             super().perform_create(serializer)
+        else:
+            raise ValidationError('Cpf informado não é válido')
 
 
 class PessoaUpdateView(generics.UpdateAPIView):
     serializer_class = PessoaSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
     def get_object(self):
         return Pessoa.objects.get(pk=self.kwargs['pk'])
@@ -78,7 +81,7 @@ class PessoaUpdateView(generics.UpdateAPIView):
 
 class PessoaDeleteView(generics.DestroyAPIView):
     serializer_class = PessoaSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
     def get_object(self):
         return Pessoa.objects.get(pk=self.kwargs['pk'])
@@ -90,17 +93,17 @@ class ObjetoListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = filter_inventario.ObjetoFilter
     serializer_class = ObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
 
 class ObjetoCreateView(generics.CreateAPIView):
     serializer_class = ObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
 
 class ObjetoUpdateView(generics.UpdateAPIView):
     serializer_class = ObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
     def get_object(self):
         return Objeto.objects.get(id=self.kwargs.get('pk'))
@@ -108,7 +111,7 @@ class ObjetoUpdateView(generics.UpdateAPIView):
 
 class ObjetoDeleteView(generics.DestroyAPIView):
     serializer_class = PessoaSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
     def get_object(self):
         return Objeto.objects.get(pk=self.kwargs['pk'])
@@ -119,20 +122,20 @@ class PossePessoaObjetoListView(generics.ListAPIView):
     queryset = PossePessoaObjeto.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_class = filter_inventario.PossePorPessoaFilter
-    serializer_class = PossePessoaObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = PossePessoaObjetoToListSerializer
+    permission_classes = [IsPolicialOrReadOnly]
 
 
 class PossePessoaObjetoCreateView(generics.CreateAPIView):
-    serializer_class = PossePessoaObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = PossePessoaObjetoToActionSerializer
+    permission_classes = [IsPolicialOrReadOnly]
 
 
 class PossePessoaObjetoUpdateView(generics.UpdateAPIView):
     serializer_class = ObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
 
 
 class PossePessoaObjetoDeleteView(generics.DestroyAPIView):
     serializer_class = ObjetoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsPolicialOrReadOnly]
