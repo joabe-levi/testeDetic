@@ -1,5 +1,5 @@
 import django_filters
-from inventario.models import Pessoa
+from inventario.models import Pessoa, Objeto, PossePessoaObjeto
 
 
 class PessoaFilter(django_filters.FilterSet):
@@ -7,4 +7,15 @@ class PessoaFilter(django_filters.FilterSet):
     class Meta:
         model = Pessoa
         fields = ('cpf', 'username', 'first_name', 'last_name')
-        search_fields = ('cpf', 'username', 'first_name__icontains', 'last_name__icontains')
+
+
+class ObjetoFilter(django_filters.FilterSet):
+    class Meta:
+        model = Objeto
+        fields = ('descricao', 'numero_serie', 'modelo', 'ano', 'cor')
+
+
+class PossePorPessoaFilter(django_filters.FilterSet):
+    class Meta:
+        model = PossePessoaObjeto
+        fields = ('pessoa__cpf', 'pessoa__username', 'pessoa__first_name', 'pessoa__last_name')
