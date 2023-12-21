@@ -5,15 +5,14 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status, filters
 from rest_framework.views import APIView
-from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 
-from utils.basics.permissions import IsPolicialOrReadOnly
+from objeto.models import Objeto, PossePessoaObjeto
+from objeto.serializers import ObjetoSerializer, PossePessoaObjetoToListSerializer, PossePessoaObjetoToActionSerializer
+from pessoa.models import Pessoa
+from pessoa.serializers import PessoaSerializer
+from utils.basics.basic_permissions.permissions import IsPolicialOrReadOnly
 from . import filters as filter_inventario
-from .models import Objeto, PossePessoaObjeto
-from .serializers import (
-    PessoaSerializer, ObjetoSerializer, PossePessoaObjetoToListSerializer, PossePessoaObjetoToActionSerializer
-)
 
 
 class IndexView(View):
@@ -64,8 +63,6 @@ class PessoaListView(generics.ListAPIView):
 class PessoaCreateView(generics.CreateAPIView):
     serializer_class = PessoaSerializer
     permission_classes = [IsPolicialOrReadOnly]
-
-
 
 
 class PessoaUpdateView(generics.UpdateAPIView):
