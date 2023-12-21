@@ -4,8 +4,9 @@ from rest_framework import permissions
 class IsPolicialOrReadOnly(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        if not hasattr(request.user, 'pessoa'):
+        user = request.user
+        if not hasattr(user, 'pessoa'):
             return False
-        if request.user.is_authenticated and request.user.pessoa.eh_policial:
+        if user.is_authenticated and user.pessoa.eh_policial:
             return True
         return False
