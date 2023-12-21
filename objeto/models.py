@@ -3,8 +3,9 @@ from django.db.models.signals import post_save
 
 from django.utils.translation import gettext_lazy as _
 
+from arma.models import Arma
 from pessoa.models import Pessoa
-from utils.basics.models import BasicModel
+from core.basics.models.models import BasicModel
 from . import choices
 
 
@@ -35,7 +36,7 @@ class Objeto(BasicModel):
 
 def consultar_arma(sender, **kwargs):
     instance = kwargs['instance']
-    if instance.tipo == choices.CHOICE_ARMA:
+    if instance.tipo_objeto.arma:
         Arma.objects.get_or_create(objeto=instance)
 
 
