@@ -10,8 +10,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from utils.basics.permissions import IsPolicialOrReadOnly
 from . import filters as filter_inventario
-from .models import Pessoa, Objeto, PossePessoaObjeto
-from .serializers import PessoaSerializer, ObjetoSerializer, PossePessoaObjetoToListSerializer, PossePessoaObjetoToActionSerializer
+from .models import Objeto, PossePessoaObjeto
+from .serializers import (
+    PessoaSerializer, ObjetoSerializer, PossePessoaObjetoToListSerializer, PossePessoaObjetoToActionSerializer
+)
 
 
 class IndexView(View):
@@ -63,12 +65,7 @@ class PessoaCreateView(generics.CreateAPIView):
     serializer_class = PessoaSerializer
     permission_classes = [IsPolicialOrReadOnly]
 
-    def perform_create(self, serializer):
-        cpf = serializer.validated_data.get('cpf')
-        if Pessoa.valida_cpf(cpf):
-            super().perform_create(serializer)
-        else:
-            raise ValidationError('Cpf informado não é válido')
+
 
 
 class PessoaUpdateView(generics.UpdateAPIView):
