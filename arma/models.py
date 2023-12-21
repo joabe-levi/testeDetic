@@ -1,12 +1,13 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from utils.basics.models import BasicModel
-from objeto.models import Objeto
+from core.basics.models.models import BasicModel
 
 
 class Arma(BasicModel):
-    objeto = models.ForeignKey(Objeto, related_name='armas', on_delete=models.PROTECT, verbose_name=_('Objeto'))
+    objeto = models.ForeignKey(
+        'objeto.Objeto', related_name='armas', on_delete=models.PROTECT, verbose_name=_('Objeto')
+    )
 
     class Meta:
         verbose_name = 'Arma'
