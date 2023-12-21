@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'inventario',
     'pessoa',
     'objeto',
+    'arma'
 ]
 
 MIDDLEWARE = [
