@@ -1,3 +1,5 @@
 from django.contrib import admin
+from arma.models import Arma
 
-# Register your models here.
+
+admin.site.register(Arma)
