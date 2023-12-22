@@ -18,11 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
+from arma.viewsets import ArmaViewSet
+from objeto.viewsets import ObjetoViewSet, PossePessoaObjetoViewSet
 from pessoa.viewsets import PessoaViewSet
 
 router = routers.DefaultRouter()
 router.register(f'pessoas', PessoaViewSet, basename='Pessoas')
-router.register(f'pessoas', PessoaViewSet, basename='Pessoas')
+router.register(f'armas', ArmaViewSet, basename='Armas')
+router.register(f'objetos', ObjetoViewSet, basename='Objetos')
+router.register(f'posses_por_pessoa', PossePessoaObjetoViewSet, basename='Posses')
+
 
 urlpatterns = [
     path('', include(router.urls)),
