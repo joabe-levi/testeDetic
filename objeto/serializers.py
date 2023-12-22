@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from arma.models import RegistroOficialDeArma
 from objeto.models import Objeto, PossePessoaObjeto
 from pessoa.serializers import PessoaSerializer
 
@@ -8,7 +9,7 @@ class ObjetoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objeto
         fields = ('id', 'descricao', 'tipo', 'numero_serie', 'modelo', 'ano', 'cor',)
-        read_only_fields = ('id',)
+        read_only_fields = ('id', 'uuid',)
 
 
 class PossePessoaObjetoToListSerializer(serializers.ModelSerializer):
