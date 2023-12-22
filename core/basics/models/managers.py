@@ -7,5 +7,5 @@ class BasicModelManager(models.QuerySet):
         return self.filter(ativo=True)
 
     def filter(self, *args, **kwargs):
-        kwargs.update(dict(ativo=True))
+        kwargs.update({'ativo': True})
         return super().filter(*args, **kwargs)
