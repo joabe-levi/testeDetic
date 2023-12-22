@@ -8,7 +8,7 @@ from pessoa.serializers import PessoaSerializer
 class ObjetoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objeto
-        fields = ('id', 'descricao', 'tipo', 'numero_serie', 'modelo', 'ano', 'cor',)
+        fields = ('id', 'descricao', 'tipo', 'numero_serie', 'modelo', 'ano', 'cor', 'ativo',)
         read_only_fields = ('id', 'uuid',)
 
 
