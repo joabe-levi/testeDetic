@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.basics.models.managers import BasicManagerDefault
+from core.basics.admins.admins import BasicAdmin
 from objeto.models import Objeto, PossePessoaObjeto
 
 
@@ -8,9 +8,10 @@ admin.site.register(PossePessoaObjeto)
 
 
 @admin.register(Objeto)
-class ObjetoAdmin(admin.ModelAdmin):
-    list_display = ('descricao', 'get_tipo_display', 'modelo',)
+class ObjetoAdmin(BasicAdmin):
+    list_display = ('descricao', 'tipo_display', 'modelo', 'ativo')
 
-    def get_queryset(self, request):
-        Objeto.add_to_class('objects', BasicManagerDefault.as_manager())
-        return super().get_queryset(request)
+    def tipo_display(self, obj):
+        return obj.get_tipo_display()
+
+    tipo_display.short_description = 'Tipo de objeto'

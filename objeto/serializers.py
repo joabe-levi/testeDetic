@@ -6,10 +6,15 @@ from pessoa.serializers import PessoaSerializer
 
 
 class ObjetoSerializer(serializers.ModelSerializer):
+    tipo = serializers.SerializerMethodField('tipo_display')
+
     class Meta:
         model = Objeto
         fields = ('id', 'descricao', 'tipo', 'numero_serie', 'modelo', 'ano', 'cor', 'ativo',)
         read_only_fields = ('id', 'uuid',)
+
+    def tipo_display(self, obj):
+        return obj.get_tipo_display()
 
 
 class PossePessoaObjetoToListSerializer(serializers.ModelSerializer):
