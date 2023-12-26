@@ -17,15 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.authtoken import views
 
 from arma.viewsets import ArmaViewSet, RegistroOficialArmaViewSet
 from objeto.viewsets import ObjetoViewSet, PossePessoaObjetoViewSet
 from pessoa.viewsets import PessoaViewSet
 
+
 router = routers.DefaultRouter()
 router.register(f'pessoas', PessoaViewSet, basename='Pessoas')
 router.register(f'armas', ArmaViewSet, basename='Armas')
-router.register(f'registros_armas', RegistroOficialArmaViewSet, basename='RegistroDeArmas')
+router.register(f'registros_oficiais_armas', RegistroOficialArmaViewSet, basename='RegistroDeArmas')
 router.register(f'objetos', ObjetoViewSet, basename='Objetos')
 router.register(f'posses_por_pessoa', PossePessoaObjetoViewSet, basename='Posses')
 
@@ -34,5 +36,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('rest_auth/', include('rest_auth.urls')),
-    # path('', include('inventario.urls')),
+    path('api-token-auth/', views.obtain_auth_token),
 ]
