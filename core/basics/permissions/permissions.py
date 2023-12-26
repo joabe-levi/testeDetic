@@ -7,6 +7,13 @@ class IsPolicialOrReadOnly(permissions.BasePermission):
         user = request.user
         if not hasattr(user, 'pessoa'):
             return False
-        if user.is_authenticated and user.pessoa.eh_policial:
-            return True
-        return False
+        return user.is_authenticated and user.pessoa.eh_policial
+
+
+class IsSuperUserOrReadOnly(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        user = request.user
+        if not hasattr(user, 'pessoa'):
+            return False
+        return user.is_authenticated and user.is_superuser
