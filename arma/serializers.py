@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from rest_framework import serializers
 
 from arma.models import Arma, RegistroOficialDeArma
@@ -19,4 +21,16 @@ class RegistroOficialArmaSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegistroOficialDeArma
         fields = ('arma',)
-        # read_only_fields = ('__all__',)
+
+    def to_representation(self, instance):
+        dict_response = OrderedDict()
+        objeto = instance.arma.objeto
+        dict_response['id'] = instance.id
+        dict_response['descricao'] = objeto.descricao
+        dict_response['tipo'] = objeto.get_tipo_display()
+        dict_response['numero_serie'] = objeto.numero_serie
+        dict_response['modelo'] = objeto.modelo
+        dict_response['ano'] = objeto.ano
+        dict_response['cor'] = objeto.cor
+        dict_response['ativo'] = instance.ativo
+        return dict_response
