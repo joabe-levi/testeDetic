@@ -22,6 +22,7 @@ from rest_framework.authtoken import views
 from arma.viewsets import ArmaViewSet, RegistroOficialArmaViewSet
 from objeto.viewsets import ObjetoViewSet, PossePessoaObjetoViewSet
 from pessoa.viewsets import PessoaViewSet
+from pessoa.views import Logout
 
 
 router = routers.DefaultRouter()
@@ -37,4 +38,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('rest_auth/', include('rest_auth.urls')),
     path('api-token-auth/', views.obtain_auth_token),
+    path('logout/', Logout.as_view()),
 ]
