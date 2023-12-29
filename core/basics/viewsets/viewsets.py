@@ -9,5 +9,4 @@ from rest_framework import permissions
 
 class BasicModelViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    # permission_classes = [IsPolicialOrReadOnly]
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsPolicialOrReadOnly]
