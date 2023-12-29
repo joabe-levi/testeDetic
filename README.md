@@ -1,6 +1,8 @@
 Fala dev's. Tudo show? 
 Então, recentemente pra testar meus conhecimentos eu resolvi buscar um teste na internet e ver como me saía. Achei um utilizando Django Rest Framework(DRF). Decidi então fazer e ver no que ia dar. Ainda estou fazendo e sempre tentando melhorar ele. Então todo apoio(seja dando dicas ou seja dando alguma critica para meu crescimento) será sempre bem vinda!
 Segue abaixo a problematica:
+
+
 ![image](https://github.com/joabe-levi/testeDetic/assets/52892525/c8be7835-d4ce-4776-acf0-a3cfbd0bb6d7)
 
 ![image](https://github.com/joabe-levi/testeDetic/assets/52892525/d201d91f-9f56-42d5-8bb7-d7dc0abfbb9b)
