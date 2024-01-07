@@ -9,5 +9,5 @@ class ArmaAdmin(BasicAdmin):
 
 
 @admin.register(RegistroOficialDeArma)
-class ArmaAdmin(BasicAdmin):
+class RegistroOficialDeArmaAdmin(BasicAdmin):
     list_display = ('arma', 'ativo',)

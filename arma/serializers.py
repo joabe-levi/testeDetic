@@ -11,12 +11,11 @@ class ArmaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Arma
-        fields = ('objeto',)
+        fields = ('id', 'objeto',)
         read_only_fields = ('id', 'uuid',)
 
 
 class RegistroOficialArmaSerializer(serializers.ModelSerializer):
-    # arma = ArmaSerializer()
 
     class Meta:
         model = RegistroOficialDeArma
