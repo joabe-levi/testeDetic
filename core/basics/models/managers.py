@@ -10,6 +10,10 @@ class BasicModelManager(models.QuerySet):
         kwargs.update({'ativo': True})
         return super().filter(*args, **kwargs)
 
+    def get(self, *args, **kwargs):
+        kwargs.update({'ativo': True})
+        return super().get(*args, **kwargs)
+
 
 class BasicManagerDefault(models.QuerySet):
     pass
